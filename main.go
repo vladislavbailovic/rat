@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	"github.com/go-vgo/robotgo"
@@ -56,8 +55,6 @@ func (m *modifierState) update(in hook.Event) {
 		m.alt = state
 	case KeySuper:
 		m.super = state
-	default:
-		log.Printf("")
 	}
 }
 
@@ -84,32 +81,25 @@ func main() {
 			case KeyEsc:
 				os.Exit(0)
 			case KeyUp:
-				log.Println("up")
 				robotgo.MoveRelative(0, -1*speed)
 			case KeyDown:
-				log.Println("down")
 				robotgo.MoveRelative(0, speed)
 			case KeyRight:
-				log.Println("right")
 				robotgo.MoveRelative(speed, 0)
 			case KeyLeft:
-				log.Println("left")
 				robotgo.MoveRelative(-1*speed, 0)
 			default:
 				if modifiers.alt == isPressed && i.Rawcode < 255 {
 					switch rune(i.Rawcode) {
 					case 'z', 'a', 'q':
-						log.Println("left click")
 						robotgo.Click("left")
 					case 'x', 's', 'w':
-						log.Println("mid click")
 						robotgo.Click("center")
 					case 'c', 'd', 'e':
-						log.Println("right click")
 						robotgo.Click("right")
 					}
 				}
-				log.Printf("evt: %v [%v]\n", i, modifiers)
+				// log.Printf("evt: %v [%v]\n", i, modifiers)
 			}
 		}
 	}
