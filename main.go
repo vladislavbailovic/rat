@@ -1,8 +1,6 @@
 package main
 
 import (
-	"os"
-
 	"github.com/go-vgo/robotgo"
 	hook "github.com/robotn/gohook"
 )
@@ -59,6 +57,10 @@ func (m *modifierState) update(in hook.Event) {
 }
 
 func main() {
+	run()
+}
+
+func run() {
 	s := hook.Start()
 	modifiers := modifierState{}
 	baseSpeed := 10
@@ -71,15 +73,15 @@ func main() {
 		if modifiers.shift == isPressed {
 			speed *= 25
 		}
-		if modifiers.ctrl == isPressed {
+		if modifiers.alt == isPressed {
 			speed /= 10
 		}
 
-		if i.Kind == hook.KeyDown {
+		if modifiers.super && i.Kind == hook.KeyDown {
 
 			switch i.Rawcode {
 			case KeyEsc:
-				os.Exit(0)
+				return
 			case KeyUp:
 				robotgo.MoveRelative(0, -1*speed)
 			case KeyDown:
